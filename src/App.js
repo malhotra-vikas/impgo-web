@@ -40,18 +40,25 @@ const ReadDataButton = () => {
 	};
 
 	return (
-		<div>
+		<table>
 			<button onClick={handleButtonClick}>Read Data</button>
-      		{data.map((item, index) => (
-        		<div key={index}>
-          			<p>ID: {item.imageid}</p>
-          			<p>Label: {item.label}</p>
-          			<p>Text: {item.text}</p>
-          			<p>URL: {item.url}</p>
-
-        		</div>
-      		))}
-    	</div>
+			<thead>
+        		<tr>
+          			<th>ID</th>
+          			<th>Labels</th>
+          			<th>Text</th>
+        		</tr>
+      		</thead>
+			<tbody>
+				{data.map((item, index) => (
+					<tr key={index}>
+						<td>{item.imageid}</td>
+						<td>{item.label}</td>
+						<td>{item.text}</td>
+					</tr>
+				))}
+			</tbody>
+		</table>
 	);
 };
 
