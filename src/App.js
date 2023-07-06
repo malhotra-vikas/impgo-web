@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import AWS from 'aws-sdk';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+AWS.config.update({
+	region: 'us-east-2',
+	accessKeyId: 'AKIA4KI6HSV4O4EDEZP5',
+	secretAccessKey: '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'
+});
 
-export default App;
+const dynamoDB = new AWS.DynamoDB();
+
+const ReadDataButton = () => {
+	const [data, setData] = useState([]);
+
+	const handleButtonClick = async () => {
+		const params = {
+			TableName: 'ImageMetadata.1',
+		};
+		
+
+		const result = await dynamoDB.scan(params).promise();
+		console.log(result);
+		console.log("2");
+		console.log(result.Items);
+		
+
+		const items = result.Items.map(item => item.imageid.S);
+		console.log(items);
+		setData(items);
+	};
+
+	return (
+		<div>
+			<button onClick={handleButtonClick}>Read Data</button>
+			{data.map((item, index) => (
+        		<p key={index}>{item}</p>
+      		))}
+		</div>
+	);
+};
+
+export default ReadDataButton;
