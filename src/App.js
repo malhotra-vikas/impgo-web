@@ -24,18 +24,34 @@ const ReadDataButton = () => {
 		console.log(result.Items);
 		
 
-		const items = result.Items.map(item => item.imageid.S);
+		const items = result.Items.map(item => ({
+			imageid: item.imageid.S,
+			label: item.detectedlabel.S,
+			text: item.detectedtext.S,
+			url: item.imageurl.S
+			
+		}));
+				console.log("3");
+
+
 		console.log(items);
+
 		setData(items);
 	};
 
 	return (
 		<div>
 			<button onClick={handleButtonClick}>Read Data</button>
-			{data.map((item, index) => (
-        		<p key={index}>{item}</p>
+      		{data.map((item, index) => (
+        		<div key={index}>
+          			<p>ID: {item.imageid}</p>
+          			<p>Label: {item.label}</p>
+          			<p>Text: {item.text}</p>
+          			<p>URL: {item.url}</p>
+
+        		</div>
       		))}
-		</div>
+    	</div>
 	);
 };
 
